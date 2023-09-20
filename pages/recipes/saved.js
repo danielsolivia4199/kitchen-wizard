@@ -5,7 +5,8 @@ import RecipeCard from '../../components/RecipeCard';
 
 export default function UserSaved() {
   const { user } = useAuth();
-  const [userSaved, setUserSaved] = useState([]);
+  const [userSaved] = useState([]);
+  const [filterUserSaved, setFilterUserSaved] = useState([]);
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
@@ -14,7 +15,19 @@ export default function UserSaved() {
     if (user && user.uid) {
       getUserSaved(user.uid)
         .then((saved) => {
-          setUserSaved(saved);
+          const filteredSavedRecipes = saved.filter((save) => {
+            const matchingRecipe = recipes.find((recipe) => recipe.firebaseKey === save.recipeFirebaseKey);
+            if (!matchingRecipe) {
+              return false;
+            }
+            const { name, cuisine } = matchingRecipe;
+            const query = searchQuery.toLowerCase();
+            return (
+              name.toLowerCase().includes(query)
+              || cuisine.toLowerCase().includes(query)
+            );
+          });
+          setFilterUserSaved(filteredSavedRecipes);
           setLoading(false);
         })
         .catch((error) => {
@@ -22,7 +35,7 @@ export default function UserSaved() {
           setLoading(false);
         });
     }
-  }, [user]);
+  }, [recipes]);
 
   useEffect(() => {
     getAllRecipes().then((recipeData) => {
@@ -32,20 +45,6 @@ export default function UserSaved() {
         console.error('Error fetching recipes:', error);
       });
   }, []);
-
-  const filteredSavedRecipes = userSaved.filter((save) => {
-    const matchingRecipe = recipes.find((recipe) => recipe.firebaseKey === save.recipeFirebaseKey);
-    if (!matchingRecipe) {
-      return false;
-    }
-
-    const { name, cuisine } = matchingRecipe;
-    const query = searchQuery.toLowerCase();
-    return (
-      name.toLowerCase().includes(query)
-      || cuisine.toLowerCase().includes(query)
-    );
-  });
 
   return (
     <div>
@@ -67,7 +66,7 @@ export default function UserSaved() {
         {loading ? (
           <p>Loading...</p>
         ) : (
-          filteredSavedRecipes.map((save) => {
+          filterUserSaved.map((save) => {
             const matchingRecipe = recipes.find((recipe) => recipe.firebaseKey === save.recipeFirebaseKey);
             if (matchingRecipe) {
               return (
@@ -75,7 +74,9 @@ export default function UserSaved() {
                   key={matchingRecipe.firebaseKey}
                   recipeObj={matchingRecipe}
                   userSaved={userSaved}
-                  onUpdate={() => getUserSaved(user.uid).then((saved) => setUserSaved(saved))}
+                  onUpdate={() => getAllRecipes().then((recipeData) => {
+                    setRecipes(recipeData);
+                  })}
                 />
               );
             }

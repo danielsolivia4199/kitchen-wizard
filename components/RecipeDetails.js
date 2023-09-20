@@ -1,5 +1,8 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState, useEffect, useCallback,
+} from 'react';
 import { useRouter } from 'next/router';
 import {
   Image, Button, Collapse, FormControl,
@@ -7,6 +10,7 @@ import {
 import {
   getSingleRecipe, addSave, removeSave, getUserSaved,
 } from '../api/RecipeData';
+import CommentSection from './CommentSection';
 import { useAuth } from '../utils/context/authContext';
 
 // Timer component
@@ -128,6 +132,7 @@ function RecipeDetailsPage() {
     <div>
       <h1>{recipeDetails.name}</h1>
       {/* Star icon for favoriting */}
+      <Image src={recipeDetails.image} alt={recipeDetails.name} />
       <Button
         type="button"
         className="star-button"
@@ -152,16 +157,26 @@ function RecipeDetailsPage() {
           <Timer initialSeconds={convertToSeconds(timeInput)} />
         </div>
       </Collapse>
-      <Image src={recipeDetails.image} alt={recipeDetails.name} />
       <h3>Cuisine: {recipeDetails.cuisine}</h3>
       {recipeDetails.dietaryrestrictions && (
       <h3>Dietary Restrictions: {recipeDetails.dietaryrestrictions}</h3>
       )}
       <h3>Total Cooking Time: {recipeDetails.totalcookingtime}</h3>
       <h1>Ingredients:</h1>
-      <p>{recipeDetails.ingredients}</p>
+      <ul>
+        {recipeDetails.ingredients.map((ingredient, index) => (
+          <li key={index}>{ingredient}</li>
+        ))}
+      </ul>
       <h1>Preparation:</h1>
-      <p>{recipeDetails.preparation}</p>
+      <ol>
+        {recipeDetails.preparation.map((step, index) => (
+          <li key={index}>{step}</li>
+        ))}
+      </ol>
+      <div className="comments-section">
+        <CommentSection recipeFirebaseKey={firebaseKey} userUID={user.uid} />
+      </div>
     </div>
   );
 }

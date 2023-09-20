@@ -82,11 +82,11 @@ function RecipeForm({ obj }) {
     if (obj.firebaseKey) {
       setFormInput(obj);
       // Update ingredients and preparation states
-      if (obj.ingredients) {
-        setIngredients(obj.ingredients.split('\n'));
+      if (Array.isArray(obj.ingredients)) {
+        setIngredients(obj.ingredients);
       }
-      if (obj.preparation) {
-        setPreparation(obj.preparation.split('\n'));
+      if (Array.isArray(obj.preparation)) {
+        setPreparation(obj.preparation);
       }
     }
   }, [obj]);
@@ -104,20 +104,29 @@ function RecipeForm({ obj }) {
     if (obj.firebaseKey) {
       updateRecipe(formInput).then(() => router.push(`/recipes/${obj.firebaseKey}`));
     } else {
-      const payload = { ...formInput, uid: user.uid };
-      createRecipe(payload).then(({ name }) => {
-        const newRecipeFirebaseKey = name;
-        const patchPayload = { firebaseKey: newRecipeFirebaseKey };
-        updateRecipe(patchPayload).then(() => {
-          addSave(newRecipeFirebaseKey, user.uid)
-            .then(() => {
-              router.push('/recipes');
-            })
-            .catch((error) => {
-              console.error('Error adding save:', error);
-            });
+      const payload = {
+        ...formInput,
+        uid: user.uid,
+        ingredients: ingredients,
+        preparation: preparation,
+      };
+      if (obj.firebaseKey) {
+        updateRecipe(payload).then(() => router.push(`/recipes/${obj.firebaseKey}`));
+      } else {
+        createRecipe(payload).then(({ name }) => {
+          const newRecipeFirebaseKey = name;
+          const patchPayload = { firebaseKey: newRecipeFirebaseKey };
+          updateRecipe(patchPayload).then(() => {
+            addSave(newRecipeFirebaseKey, user.uid)
+              .then(() => {
+                router.push('/recipes');
+              })
+              .catch((error) => {
+                console.error('Error adding save:', error);
+              });
+          });
         });
-      });
+      }
     }
   };
 
@@ -138,7 +147,7 @@ function RecipeForm({ obj }) {
         <h3>Ingredients:</h3>
         {ingredients.map((ingredient, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>
+          <div key={index} className="bullet-point">
             <input
               type="text"
               style={{ width: '90%' }}

@@ -1,4 +1,13 @@
 @import 'bootstrap/dist/css/bootstrap.css';
 
+.bullet-point {
+  list-style-type: disc;
+  display: list-item;
+  margin-left: 20px;
+}
 
+.bullet-point::before {
+  content: "• ";
+  margin-right: 10px;
+}
 

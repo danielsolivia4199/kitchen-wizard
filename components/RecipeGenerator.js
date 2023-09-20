@@ -17,8 +17,8 @@ function RecipeGenerator() {
 
     try {
       const allRecipes = await getAllRecipes();
-
-      let matchingRecipes = allRecipes.filter((recipe) => wordsArray.every((word) => recipe.ingredients.toLowerCase().includes(word.toLowerCase())));
+      const publicRecipes = allRecipes.filter((recipe) => recipe.public === true);
+      let matchingRecipes = publicRecipes.filter((recipe) => wordsArray.every((word) => recipe.ingredients.toLowerCase().includes(word.toLowerCase())));
 
       // Apply additional filters here
       if (cuisine) {
