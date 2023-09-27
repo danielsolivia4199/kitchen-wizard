@@ -72,7 +72,22 @@ export default function RecipeCard({ recipeObj, onUpdate }) {
 
   return (
     <Card className="recipe-card" style={{ width: '18rem', margin: '10px' }}>
-      <Image variant="top" src={recipeObj.image} alt={recipeObj.name} style={{ height: '400px' }} />
+      <div style={{ height: '200px', overflow: 'hidden', position: 'relative' }}>
+        <Image
+          variant="top"
+          src={recipeObj.image}
+          alt={recipeObj.name}
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+          }}
+        />
+      </div>
       <Card.Body>
         <Card.Title>{recipeObj.name}</Card.Title>
         <Button

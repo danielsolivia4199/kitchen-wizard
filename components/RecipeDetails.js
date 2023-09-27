@@ -131,22 +131,27 @@ function RecipeDetailsPage() {
   return (
     <div>
       <h1>{recipeDetails.name}</h1>
-      {/* Star icon for favoriting */}
-      <Image src={recipeDetails.image} alt={recipeDetails.name} />
-      <Button
-        type="button"
-        className="star-button"
-        onClick={toggleSave}
-      >
-        {isSaved ? 'Unsave' : 'Save'}
-      </Button>
-      <Button
-        onClick={() => setOpen(!open)}
-        aria-controls="timer-collapse"
-        aria-expanded={open}
-      >
-        Timer
-      </Button>
+      {/* Image */}
+      <div>
+        <Image src={recipeDetails.image} alt={recipeDetails.name} className="recipe-image" />
+      </div>
+      {/* Buttons */}
+      <div>
+        <Button
+          type="button"
+          className="star-button"
+          onClick={toggleSave}
+        >
+          {isSaved ? 'Unsave' : 'Save'}
+        </Button>
+        <Button
+          onClick={() => setOpen(!open)}
+          aria-controls="timer-collapse"
+          aria-expanded={open}
+        >
+          Timer
+        </Button>
+      </div>
       <Collapse in={open}>
         <div id="timer-collapse">
           <FormControl
@@ -159,7 +164,7 @@ function RecipeDetailsPage() {
       </Collapse>
       <h3>Cuisine: {recipeDetails.cuisine}</h3>
       {recipeDetails.dietaryrestrictions && (
-      <h3>Dietary Restrictions: {recipeDetails.dietaryrestrictions}</h3>
+        <h3>Dietary Restrictions: {recipeDetails.dietaryrestrictions}</h3>
       )}
       <h3>Total Cooking Time: {recipeDetails.totalcookingtime}</h3>
       <h1>Ingredients:</h1>
@@ -180,5 +185,4 @@ function RecipeDetailsPage() {
     </div>
   );
 }
-
 export default RecipeDetailsPage;

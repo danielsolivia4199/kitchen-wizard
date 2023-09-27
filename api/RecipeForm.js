@@ -1,3 +1,4 @@
+/* eslint-disable react/forbid-prop-types */
 /* eslint-disable no-shadow */
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
@@ -10,8 +11,8 @@ import { createRecipe, updateRecipe, addSave } from './RecipeData';
 
 const initialState = {
   name: '',
-  ingredients: '',
-  preparation: '',
+  ingredients: [],
+  preparation: [],
   totalcookingtime: '',
   cuisine: '',
   dietaryrestrictions: '',
@@ -33,10 +34,9 @@ function RecipeForm({ obj }) {
     setIngredients(newIngredients);
     setFormInput((prevState) => ({
       ...prevState,
-      ingredients: newIngredients.join('\n'),
+      ingredients: newIngredients, // Keep it as an array
     }));
   };
-
   const addIngredient = () => {
     setIngredients([...ingredients, '']);
   };
@@ -47,7 +47,7 @@ function RecipeForm({ obj }) {
     setPreparation(newPreparation);
     setFormInput((prevState) => ({
       ...prevState,
-      preparation: newPreparation.join('\n'),
+      preparation: newPreparation, // Keep it as an array
     }));
   };
 
@@ -61,7 +61,7 @@ function RecipeForm({ obj }) {
     setIngredients(newIngredients);
     setFormInput((prevState) => ({
       ...prevState,
-      ingredients: newIngredients.join('\n'),
+      ingredients: newIngredients, // Keep it as an array
     }));
   };
 
@@ -71,23 +71,15 @@ function RecipeForm({ obj }) {
     setPreparation(newPreparation);
     setFormInput((prevState) => ({
       ...prevState,
-      preparation: newPreparation.join('\n'),
+      preparation: newPreparation, // Keep it as an array
     }));
   };
-  useEffect(() => {
-    if (obj.firebaseKey) setFormInput(obj);
-  }, [obj]);
 
   useEffect(() => {
     if (obj.firebaseKey) {
       setFormInput(obj);
-      // Update ingredients and preparation states
-      if (Array.isArray(obj.ingredients)) {
-        setIngredients(obj.ingredients);
-      }
-      if (Array.isArray(obj.preparation)) {
-        setPreparation(obj.preparation);
-      }
+      setIngredients(Array.isArray(obj.ingredients) ? obj.ingredients : obj.ingredients.split('\n'));
+      setPreparation(Array.isArray(obj.preparation) ? obj.preparation : obj.preparation.split('\n'));
     }
   }, [obj]);
 
@@ -101,40 +93,34 @@ function RecipeForm({ obj }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    const payload = {
+      ...formInput,
+      uid: user.uid,
+    };
     if (obj.firebaseKey) {
-      updateRecipe(formInput).then(() => router.push(`/recipes/${obj.firebaseKey}`));
+      updateRecipe(payload).then(() => router.push(`/recipes/${obj.firebaseKey}`));
     } else {
-      const payload = {
-        ...formInput,
-        uid: user.uid,
-        ingredients: ingredients,
-        preparation: preparation,
-      };
-      if (obj.firebaseKey) {
-        updateRecipe(payload).then(() => router.push(`/recipes/${obj.firebaseKey}`));
-      } else {
-        createRecipe(payload).then(({ name }) => {
-          const newRecipeFirebaseKey = name;
-          const patchPayload = { firebaseKey: newRecipeFirebaseKey };
-          updateRecipe(patchPayload).then(() => {
-            addSave(newRecipeFirebaseKey, user.uid)
-              .then(() => {
-                router.push('/recipes');
-              })
-              .catch((error) => {
-                console.error('Error adding save:', error);
-              });
-          });
+      createRecipe(payload).then(({ name }) => {
+        const newRecipeFirebaseKey = name;
+        const patchPayload = { firebaseKey: newRecipeFirebaseKey };
+        updateRecipe(patchPayload).then(() => {
+          addSave(newRecipeFirebaseKey, user.uid)
+            .then(() => {
+              router.push('/recipes');
+            })
+            .catch((error) => {
+              console.error('Error adding save:', error);
+            });
         });
-      }
+      });
     }
   };
 
   return (
     <>
-      <Form onSubmit={handleSubmit}>
-        <h2 className="mt-5">{obj.firebaseKey ? 'Update' : 'Add'} Recipe</h2>
-        <FloatingLabel controlId="floatingInput1" label="Name" className="mb-3">
+      <Form onSubmit={handleSubmit} className="form-container">
+        <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Add'} Recipe</h2>
+        <FloatingLabel controlId="floatingInput1" label="Name" className="form-input">
           <Form.Control
             type="text"
             placeholder="Enter Name of Recipe"
@@ -147,7 +133,7 @@ function RecipeForm({ obj }) {
         <h3>Ingredients:</h3>
         {ingredients.map((ingredient, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index} className="bullet-point">
+          <div key={index} className="ingredient-gen-input">
             <input
               type="text"
               style={{ width: '90%' }}
@@ -156,16 +142,16 @@ function RecipeForm({ obj }) {
               onChange={(e) => handleIngredientChange(e, index)}
               required
             />
-            <button type="button" onClick={() => removeIngredient(index)}>X</button>
+            <button type="button" className="x-button" onClick={() => removeIngredient(index)}>X</button>
           </div>
         ))}
-        <button type="button" onClick={addIngredient}>
+        <button type="button" className="add-button" onClick={addIngredient}>
           Add Ingredient
         </button>
         <h3>Preparation:</h3>
         {preparation.map((preparation, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index}>
+          <div key={index} className="prep-input">
             <input
               type="text"
               style={{ width: '90%' }}
@@ -174,13 +160,13 @@ function RecipeForm({ obj }) {
               onChange={(e) => handlePreparationChange(e, index)}
               required
             />
-            <button type="button" onClick={() => removePreparation(index)}>X</button>
+            <button type="button" className="x-button" onClick={() => removePreparation(index)}>X</button>
           </div>
         ))}
-        <button type="button" onClick={addPreparation}>
+        <button type="button" className="add-button" onClick={addPreparation}>
           Add Step
         </button>
-        <FloatingLabel controlId="floatingInput4" label="Total Cooking Time" className="mb-3">
+        <FloatingLabel controlId="floatingInput4" label="Total Cooking Time" className="form-input">
           <Form.Control
             type="text"
             placeholder="Total Cooking Time"
@@ -191,7 +177,7 @@ function RecipeForm({ obj }) {
           />
         </FloatingLabel>
         <div>
-          <FloatingLabel controlId="floatingInput5" label="Cuisine" className="mb-3">
+          <FloatingLabel controlId="floatingInput5" label="Cuisine" className="form-input">
             <Form.Control
               type="text"
               placeholder="Enter Cuisine Type"
@@ -202,8 +188,9 @@ function RecipeForm({ obj }) {
             />
           </FloatingLabel>
         </div>
-        <FloatingLabel controlId="floatingInput6" label="Dietary Restrictions" className="mb-3">
+        <FloatingLabel controlId="floatingInput6" label="Dietary Restrictions">
           <Form.Select
+            className="form-input"
             name="dietaryrestrictions"
             value={formInput.dietaryrestrictions}
             onChange={handleChange}
@@ -216,6 +203,7 @@ function RecipeForm({ obj }) {
         </FloatingLabel>
         <FloatingLabel controlId="floatingInput8" label="Meal Type" className="mb-3">
           <Form.Select
+            className="form-input"
             name="mealtype"
             value={formInput.mealtype}
             onChange={handleChange}
@@ -231,6 +219,7 @@ function RecipeForm({ obj }) {
         </FloatingLabel>
         <FloatingLabel controlId="floatingInput7" label="Image" className="mb-3">
           <Form.Control
+            className="form-input"
             type="url"
             placeholder="Add Image"
             name="image"
@@ -253,7 +242,7 @@ function RecipeForm({ obj }) {
             }));
           }}
         />
-        <Button type="submit">{obj.firebaseKey ? 'Update' : 'Add'} Recipe</Button>
+        <Button type="submit" className="submit-button">{obj.firebaseKey ? 'Update' : 'Add'} Recipe</Button>
       </Form>
     </>
   );
@@ -262,8 +251,8 @@ function RecipeForm({ obj }) {
 RecipeForm.propTypes = {
   obj: PropTypes.shape({
     name: PropTypes.string,
-    ingredients: PropTypes.string,
-    preparation: PropTypes.string,
+    ingredients: PropTypes.array,
+    preparation: PropTypes.array,
     totalcookingtime: PropTypes.string,
     cuisine: PropTypes.string,
     dietaryrestrictions: PropTypes.string,
