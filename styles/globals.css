@@ -1,13 +1,362 @@
 @import 'bootstrap/dist/css/bootstrap.css';
 
-.bullet-point {
-  list-style-type: disc;
-  display: list-item;
-  margin-left: 20px;
+body {
+  background-color: whitesmoke;
+}
+.generator-title {
+  font-size: 2em;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-.bullet-point::before {
-  content: "• ";
+* {
+  box-sizing: border-box;
+}
+
+.ingredients-input,
+.cuisine-input,
+.mealtype-input,
+.dietary-input,
+.select {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+}
+
+.generate-button {
+  width: 100%;
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.generate-button:hover {
+  background-color: #45a049;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.inputGroup {
+  width: 300px;
+}
+
+.alert {
+  margin-top: 20px;
+}
+/* globals.css */
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Style the container holding the buttons */
+.container-recipes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Style individual buttons */
+.big-button {
+  font-size: 2rem; 
+  margin: 20px; 
+  width: 600px;
+  text-align: center;
+}
+/* globals.css */
+
+.container-recipe-form {
+  max-width: 600px;
+  margin: auto;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+h3 {
+  margin-top: 20px;
+}
+
+.form-container,
+.generator-container {
+  max-width: 700px; /* Increase this if needed */
+  min-width: 600px; /* Add min-width to ensure it does not shrink too much */
+  margin: auto;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-sizing: border-box; /* Ensures padding is included in width */
+}
+
+
+.form-title,
+.generator-title {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.input,
+.textarea,
+.select {
+  width: calc(100% - 20px); /* Adjust width considering padding */
+  padding: 10px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box; /* Ensures padding and border are included in width */
+}
+
+.form-input {
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #45a049;
+}
+
+
+.header {
+  margin-bottom: 20px;
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.label {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.input-field,
+.select-field {
+  width: 100%;
+  padding: 10px;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+}
+
+.button-group {
+  margin-top: 20px;
+}
+
+.x-button {
+  background-color: slategray;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.add-button {
+  background-color: seagreen;
+  color: #fff;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.x-button:hover {
+  background-color: red;
+}
+
+.add-button:hover {
+  background-color: lightseagreen;
+
+}
+
+.submit-button {
+  background-color: #28a745;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #218838;
+}
+
+.home-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 30px;
+  text-align: center;
+}
+
+.home-image {
+  width: 200px;
+  height: auto;
+  margin: 20px 0;
+}
+
+.home-card {
+  margin: 15px 0;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.home-card:hover {
+  transform: scale(1.05);
+}
+
+.home-card-title {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.home-card-text {
+  font-size: 1em;
+  color: #333;
+}
+
+.home-title {
+  font-size: 2em;
+  margin: 20px 0;
+}
+
+.home-subtitle {
+  font-size: 1.5em;
+  margin: 20px 0;
+}
+
+.full-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.search-bar-input {
+  width: 500px;
+  height: 40px;
+}
+
+.saved-recipes-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px; 
+  overflow: auto;
+}
+
+
+.recipe-card {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  transition: transform .2s ease-in-out;
+}
+
+.recipe-card:hover {
+  transform: scale(1.05);
+}
+
+/* RecipeDetailsPage.module.css */
+
+.recipe-image {
+  width: 200px; /* Adjust as needed */
+  height: auto;
+}
+
+.comments-section {
+  margin-top: 20px;
+  padding: 20px;
+  border-top: 2px solid #ccc;
+  background-color: #f9f9f9; /* Light grey background */
+}
+
+.star-button, .timer-button {
   margin-right: 10px;
 }
 
+.profile-container {
+  text-align: center;
+  padding: 20px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.profile-image {
+  border-radius: 50%;
+  margin-bottom: 20px;
+}
+
+.profile-heading {
+  margin-bottom: 10px;
+  font-size: 24px;
+  color: #333;
+}
+
+.profile-detail {
+  margin-bottom: 15px;
+  font-size: 18px;
+  color: #555;
+}
+
+.saved-recipes-btn {
+  background-color: #4CAF50; /* Green */
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  
+}
+
+.custom-navbar {
+  border-bottom: 2px solid #4CAF50; /* Adds a border at the bottom of navbar */
+}
+
+.custom-navbar a {
+  color: #ffffff; /* Sets the color of links */
+}
+
+.custom-navbar a:hover {
+  color: #4CAF50; /* Changes color of links on hover */
+}
+
+.custom-navbar button {
+  background-color: seagreen; /* Sets the background color of the Sign Out button */
+  border: none; /* Removes the default border of the button */
+}
+
+.custom-navbar button:hover {
+  background-color: lightblue; /* Changes the background color of button on hover */
+}

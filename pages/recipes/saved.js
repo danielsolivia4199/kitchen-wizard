@@ -35,7 +35,7 @@ export default function UserSaved() {
           setLoading(false);
         });
     }
-  }, [recipes]);
+  }, [recipes, searchQuery]);
 
   useEffect(() => {
     getAllRecipes().then((recipeData) => {
@@ -47,22 +47,18 @@ export default function UserSaved() {
   }, []);
 
   return (
-    <div>
+    <div className="full-page-container">
       <div className="search-bar">
         <input
           type="text"
+          className="search-bar-input"
           placeholder="Search for recipe by name or cuisine"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          style={{
-            width: '500px',
-            height: '40px',
-            fontSize: '18px',
-          }}
         />
       </div>
       <h1 className="user-saved">Saved Recipes</h1>
-      <div className="saved">
+      <div className="saved-recipes-container">
         {loading ? (
           <p>Loading...</p>
         ) : (
