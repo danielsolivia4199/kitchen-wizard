@@ -1,62 +1,59 @@
-# React/Next.js Template
+# Kitchen Wizard
 
-[See Live Demo of this Template](https://drt-next-js-template.netlify.app/)
+Discover the magic of Kitchen Wizard, where we transform your available ingredients into culinary masterpieces. Digitize your recipes and manage them with ease.
 
-## Topics
-- [Get Started](#get-started)
-- [Starting the Project](#starting-the-project)
-- [Using axios](#using-axios)
-- [Deploying on Netlify](#deploying-on-netlify)
-___
-## Getting Started
-### Use Template
-#### 1. To get started, click the GREEN "Use this Template" button at the top of the repo
-<img width="915" alt="Screen Shot 2022-07-06 at 12 54 01 PM" src="https://user-images.githubusercontent.com/29741570/177612998-4aac9237-5a1e-4f13-8ae0-468587521564.png">
+## Features
 
-#### 2. Make sure YOUR github account is selected in the dropdown and name your project
-<img width="763" alt="Screen Shot 2022-07-06 at 12 54 48 PM" src="https://user-images.githubusercontent.com/29741570/177613126-dd38f678-7553-4f27-8a4a-75680f14d71e.png">
+**Recipe Generator**: Unsure about dinner tonight? Key in your available ingredients, and or preferences, and let Kitchen Wizard concoct a recipe for you.
+  
+**Personal Recipe Collection**: Store those age-old handwritten recipes or the latest ones you've created.
 
-#### 3. Clone your new repo to your local machine
-#### 4. Go to the **NEXT** section
+**Public or Private Options**: Share your recipes with the community or keep your recipes private, for your own viewing pleasure.
 
-## Starting the Project
-1. Create a Firebase project and set up authentication. Use [these videos](https://vimeo.com/showcase/codetracker-firebase) as a refresher if needed.
-1. Create a `.env` file at the root of the project
-1. Copy/Paste the contents of the `.env.sample` file to your newly created `.env` file.
-1. Copy over all of your Firebase values into the `.env` file.
-1. Open the `package.json` file and change the `name` property to the name of your application, and `author` to  your name.
-1. From your command line, be in the root directory and run `npm install` OR `npm i` for short.
-1. Next, run `npm run prepare`. This command sets up husky to track eslint errors on commit that will make your deploy fail on Netlify.
-1. To start your application, run `npm run dev`. THIS IS THE COMMAND YOU WILL USE TO RUN YOUR DEVELOPMENT SERVER FROM NOW ON.
-1. Open [http://localhost:3000](http://localhost:3000) with your browser.
+**Community-Curated Recipes**: Dive into the diverse world of recipes, brought alive with contributions from our wonderful users.
 
-### If you see this, you are set to go!
-<img width="450" alt="Screen Shot 2022-07-06 at 1 07 27 PM" src="https://user-images.githubusercontent.com/29741570/177615077-9b6a75bc-0260-4d29-bb88-bd95a3140687.png">
+**Reviews and Ratings**: Tried a recipe? Leave your feedback! Rate and review other users' recipes and let the community know what you think!.
 
+ **Save and Search**: Stumbled upon a recipe you love? Save it for easy access. Use the search functionality in the "Saved Recipes" page to find your favorites quickly.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+**Integrated Timer**: Say goodbye to overcooked meals; our recipe details feature an integrated timer for precision cooking.
 
-**NOTES:** 
-- If you see the following error, you did not follow all the setup steps correctly and failed to add your Firebase creds. Go back and do that NOW.
+## How to Use
 
-<img width="1043" alt="Screen Shot 2022-07-06 at 11 18 45 AM" src="https://user-images.githubusercontent.com/29741570/177612501-c2628f18-4bbd-4de9-aae6-27ffba1172d6.png">
+1. **Recipe Generator**: 
+   - Start by keying in the ingredients or any preferences you have (dietary restrictions, meal type, and or cuisine) you have.
+   - Kitchen Wizard will display a recipe for you to try!
 
-### Deploying on Netlify
-Netlify will automatically detect your project and prepopulate the settings, but should something go wrong and it does not, here are the commands:
+2. **Add Recipe**: 
+   - Click on the "Add Recipe" button.
+   - Populate the form with the recipe name, ingredients, steps, and more.
+   - Choose to make your recipe Public (for sharing) or Private (for personal use).
 
-- Build Command: `npm run build`
-- Publish directory: `.next`
+3. **Saved Recipes**: 
+   - Navigate to this page to view your collection.
+   - Utilize the search bar to quickly find your saved recipes.
 
-#### Additional Steps to Take on Netlify
-- Add Environmental Variables
-    - Any Enviromental variables you are using in your `.env` file should be added to Netlify. 
-        - Go to Site settings > Build & deploy > Environment > Environment variables and the keys and values there.
+4. **Recipe Details**: Access complete information about a recipe and utilize the integrated timer for accuracy while cooking.
 
-- Update Firebase URL Settings
-    - In Firebase under Authentication select sign in methods, scroll to Authorized domains. Add your Netlify URL.
-        
-## Learn More about Next.js
-To learn more about Next.js, take a look at the following resources:
+## Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Web Application:**
+
+1. Launch your preferred web browser.
+2. Visit [kitchenwizard.netlify.app](https://kitchenwizard.netlify.app).
+3. No download or installation necessary. Simply use it directly on the web. Consider bookmarking for quick access!
+
+For developers:
+
+1. The codebase resides on GitHub. Feel free to clone, fork, or contribute [here](https://github.com/danielsolivia4199/kitchen-wizard).
+2. Deployment is streamlined via Netlify.
+
+## Contribution
+
+The richness of Kitchen Wizard lies in its community. If you have a standout recipe, we welcome you to add it and share the love!
+
+## Wrapping Up
+
+Kitchen Wizard aims to simplify and enhance your culinary journey. Key in, generate, save, and relish.
+
+Happy Cooking! 🍳🧙‍♂️
