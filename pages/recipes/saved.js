@@ -48,6 +48,7 @@ export default function UserSaved() {
 
   return (
     <div className="full-page-container">
+      <h1 className="user-saved">Saved Recipes</h1>
       <div className="search-bar">
         <input
           type="text"
@@ -57,7 +58,6 @@ export default function UserSaved() {
           onChange={(e) => setSearchQuery(e.target.value)}
         />
       </div>
-      <h1 className="user-saved">Saved Recipes</h1>
       <div className="saved-recipes-container">
         {loading ? (
           <p>Loading...</p>
