@@ -162,17 +162,11 @@ body {
 
 @media screen and (min-width: 600px) and (max-width: 900px) {
   .big-button {
-    font-size: 2rem;
+    font-size: 2.5rem;
     width: 80%;
   }
 }
 
-@media screen and (min-width: 901px) {
-  .big-button {
-    font-size: 2.5rem;
-    width: 600px;
-  }
-}
 
 
 
@@ -188,6 +182,11 @@ h2 {
 
 h3 {
   margin-top: 20px;
+}
+
+.modal-body, .modal-content {
+  background-color: transparent;
+  border: none;
 }
 
 .form-container,
@@ -264,6 +263,8 @@ h3 {
   border-radius: 4px;
   cursor: pointer;
 }
+
+
 
 .x-button:hover {
   background-color: red;
