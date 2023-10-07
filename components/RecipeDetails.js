@@ -1,3 +1,4 @@
+/* eslint-disable no-restricted-globals */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable react/prop-types */
 import React, {
@@ -34,15 +35,17 @@ const Timer = ({ initialSeconds = 0 }) => {
     return () => clearInterval(interval);
   }, [isActive, seconds]);
 
-  const formattedTime = new Date(seconds * 1000).toISOString().substr(11, 8);
+  const formattedTime = seconds && !isNaN(seconds)
+    ? new Date(seconds * 1000).toISOString().substr(11, 8)
+    : '00:00:00'; // or some other default value
 
   return (
     <div>
       <h1>{formattedTime}</h1>
-      <Button onClick={() => setIsActive(!isActive)}>
+      <Button className="timer-button" variant="success" onClick={() => setIsActive(!isActive)}>
         {isActive ? 'Pause' : 'Start'}
       </Button>
-      <Button onClick={() => setSeconds(initialSeconds)}>
+      <Button className="timer-button" variant="danger" onClick={() => setSeconds(initialSeconds)}>
         Reset
       </Button>
     </div>
@@ -130,57 +133,64 @@ function RecipeDetailsPage() {
 
   return (
     <div>
-      <h1>{recipeDetails.name}</h1>
-      {/* Image */}
-      <div>
-        <Image src={recipeDetails.image} alt={recipeDetails.name} className="recipe-image" />
-      </div>
-      {/* Buttons */}
-      <div>
-        <Button
-          type="button"
-          className="star-button"
-          onClick={toggleSave}
-        >
-          {isSaved ? 'Unsave' : 'Save'}
-        </Button>
-        <Button
-          onClick={() => setOpen(!open)}
-          aria-controls="timer-collapse"
-          aria-expanded={open}
-        >
-          Timer
-        </Button>
-      </div>
-      <Collapse in={open}>
-        <div id="timer-collapse">
-          <FormControl
-            type="text"
-            value={timeInput}
-            onChange={(e) => setTimeInput(e.target.value)}
-          />
-          <Timer initialSeconds={convertToSeconds(timeInput)} />
+      <div className="image-con">
+        <h1>{recipeDetails.name}</h1>
+        {/* Image */}
+        <div>
+          <Image src={recipeDetails.image} alt={recipeDetails.name} className="recipe-image" />
         </div>
-      </Collapse>
-      <h3>Cuisine: {recipeDetails.cuisine}</h3>
-      {recipeDetails.dietaryrestrictions && (
-        <h3>Dietary Restrictions: {recipeDetails.dietaryrestrictions}</h3>
-      )}
-      <h3>Total Cooking Time: {recipeDetails.totalcookingtime}</h3>
-      <h1>Ingredients:</h1>
-      <ul>
-        {recipeDetails.ingredients.map((ingredient, index) => (
-          <li key={index}>{ingredient}</li>
-        ))}
-      </ul>
-      <h1>Preparation:</h1>
-      <ol>
-        {recipeDetails.preparation.map((step, index) => (
-          <li key={index}>{step}</li>
-        ))}
-      </ol>
-      <div className="comments-section">
-        <CommentSection recipeFirebaseKey={firebaseKey} userUID={user.uid} />
+      </div>
+      <div className="recipe-details-container">
+        <h5>Cuisine: {recipeDetails.cuisine}</h5>
+        {recipeDetails.dietaryrestrictions && (
+          <h5>Dietary Restrictions: {recipeDetails.dietaryrestrictions}</h5>
+        )}
+        <h5>Total Cooking Time: {recipeDetails.totalcookingtime}</h5>
+        <h3 className="detail-title">Ingredients:</h3>
+        <ul>
+          {recipeDetails.ingredients.map((ingredient, index) => (
+            <li key={index}>{ingredient}</li>
+          ))}
+        </ul>
+        <h3 className="detail-title">Preparation:</h3>
+        <ol>
+          {recipeDetails.preparation.map((step, index) => (
+            <li key={index}>{step}</li>
+          ))}
+        </ol>
+        {/* Buttons */}
+        <div className="con-buttons">
+          <Button
+            type="button"
+            size="lg"
+            variant="danger"
+            className="star-button"
+            onClick={toggleSave}
+          >
+            {isSaved ? 'Unsave' : 'Save'}
+          </Button>
+          <Button
+            onClick={() => setOpen(!open)}
+            aria-controls="timer-collapse"
+            aria-expanded={open}
+            size="lg"
+          >
+            Timer
+          </Button>
+        </div>
+        <Collapse in={open}>
+          <div id="timer-collapse">
+            <FormControl
+              type="text"
+              value={timeInput}
+              onChange={(e) => setTimeInput(e.target.value)}
+            />
+            <Timer initialSeconds={convertToSeconds(timeInput)} />
+          </div>
+        </Collapse>
+        <div className="comments-section">
+          <CommentSection recipeFirebaseKey={firebaseKey} userUID={user.uid} />
+        </div>
       </div>
     </div>
   );

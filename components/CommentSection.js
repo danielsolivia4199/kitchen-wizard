@@ -47,28 +47,28 @@ export default function CommentSection({ recipeFirebaseKey }) {
 
   return (
     <div>
-      <h3>Reviews ({totalReviews})</h3>
+      <h3 className="detail-title">Reviews ({totalReviews})</h3>
       <p>Average Rating: {isNaN(averageRating) ? 'N/A' : averageRating.toFixed()}/5</p>
       <div className="comment-section">
         {comments.map((comment) => (
           <div key={comment.firebaseKey} className="comment-card">
+            <h4 className="display-name-comment">{comment.userDisplayName}:</h4>
+            <h5>{comment.text}</h5>
+            <p>Rating:{comment.rating}/5</p>
             <span className="comment-data">{comment.time}</span>
-            <h5>{comment.userDisplayName}:</h5>
-            <p>{comment.text}</p>
-            <p>Rating: {comment.rating}/5</p>
           </div>
         ))}
       </div>
       <Form onSubmit={handleSubmit}>
-        <input type="text" value={newComments} onChange={handleChange} placeholder="Leave a Review!" />
-        <select value={selectedRating} onChange={handleRatingChange}>
+        <input type="text" value={newComments} onChange={handleChange} placeholder="Leave a Review!" className="review-text" />
+        <select value={selectedRating} onChange={handleRatingChange} className="review-text">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
         </select>
-        <Button type="submit">Add</Button>
+        <Button type="submit" variant="primary">Add</Button>
       </Form>
     </div>
   );

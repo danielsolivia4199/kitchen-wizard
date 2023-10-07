@@ -120,7 +120,7 @@ function RecipeForm({ obj }) {
     <>
       <Form onSubmit={handleSubmit} className="form-container">
         <h2 className="form-title">{obj.firebaseKey ? 'Update' : 'Add'} Recipe</h2>
-        <FloatingLabel controlId="floatingInput1" label="Name" className="form-input">
+        <FloatingLabel controlId="floatingInput1" label="Name" className="input1">
           <Form.Control
             type="text"
             placeholder="Enter Name of Recipe"
@@ -133,9 +133,10 @@ function RecipeForm({ obj }) {
         <h3>Ingredients:</h3>
         {ingredients.map((ingredient, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index} className="ingredient-gen-input">
+          <div key={index} className="input1">
             <input
               type="text"
+              className="object-input"
               style={{ width: '90%' }}
               placeholder="Enter Recipe Ingredient (and measurements)"
               value={ingredient}
@@ -151,7 +152,7 @@ function RecipeForm({ obj }) {
         <h3>Preparation:</h3>
         {preparation.map((preparation, index) => (
           // eslint-disable-next-line react/no-array-index-key
-          <div key={index} className="prep-input">
+          <div key={index} className="input1">
             <input
               type="text"
               style={{ width: '90%' }}
@@ -166,7 +167,7 @@ function RecipeForm({ obj }) {
         <button type="button" className="add-button" onClick={addPreparation}>
           Add Step
         </button>
-        <FloatingLabel controlId="floatingInput4" label="Total Cooking Time" className="form-input">
+        <FloatingLabel controlId="floatingInput4" label="Total Cooking Time" className="input1">
           <Form.Control
             type="text"
             placeholder="Total Cooking Time"
@@ -177,7 +178,7 @@ function RecipeForm({ obj }) {
           />
         </FloatingLabel>
         <div>
-          <FloatingLabel controlId="floatingInput5" label="Cuisine" className="form-input">
+          <FloatingLabel controlId="floatingInput5" label="Cuisine" className="input1">
             <Form.Control
               type="text"
               placeholder="Enter Cuisine Type"
@@ -190,7 +191,7 @@ function RecipeForm({ obj }) {
         </div>
         <FloatingLabel controlId="floatingInput6" label="Dietary Restrictions">
           <Form.Select
-            className="form-input"
+            className="input1"
             name="dietaryrestrictions"
             value={formInput.dietaryrestrictions}
             onChange={handleChange}
@@ -203,7 +204,7 @@ function RecipeForm({ obj }) {
         </FloatingLabel>
         <FloatingLabel controlId="floatingInput8" label="Meal Type" className="mb-3">
           <Form.Select
-            className="form-input"
+            className="input1"
             name="mealtype"
             value={formInput.mealtype}
             onChange={handleChange}
@@ -217,9 +218,9 @@ function RecipeForm({ obj }) {
             <option value="Drink">Drink</option>
           </Form.Select>
         </FloatingLabel>
-        <FloatingLabel controlId="floatingInput7" label="Image" className="mb-3">
+        <FloatingLabel controlId="floatingInput7" label="Image" className="input1">
           <Form.Control
-            className="form-input"
+            className="input1"
             type="url"
             placeholder="Add Image"
             name="image"

@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
 import Link from 'next/link';
 import {
@@ -8,28 +7,31 @@ import { signOut } from '../utils/auth';
 
 export default function NavBarAuth() {
   return (
-    <Navbar className="custom-navbar" collapseOnSelect expand="lg" bg="dark" variant="dark">
-      <Container>
-        <Link passHref href="/">
-          <Navbar.Brand>Kitchen Wizard</Navbar.Brand>
-        </Link>
+    <Navbar className="custom-navbar align-items-center" collapseOnSelect expand="sm">
+      <Container fluid>
+        <div className="d-flex align-items-center">
+          <Link passHref href="/">
+            <Navbar.Brand>Kitchen Wizard |</Navbar.Brand>
+          </Link>
+        </div>
+
         <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            {/* CLOSE NAVBAR ON LINK SELECTION: https://stackoverflow.com/questions/72813635/collapse-on-select-react-bootstrap-navbar-with-nextjs-not-working */}
-            <Link passHref href="/">
-              <Nav.Link>Home</Nav.Link>
-            </Link>
+        <Navbar.Collapse id="responsive-navbar-nav" className="nav-text">
+          <Nav>
             <Link passHref href="/recipes">
               <Nav.Link>Recipes</Nav.Link>
             </Link>
             <Link passHref href="/profile">
               <Nav.Link>Profile</Nav.Link>
             </Link>
-            <Button variant="danger" onClick={signOut}>Sign Out</Button>
           </Nav>
         </Navbar.Collapse>
+
+        <div className="d-flex align-items-center">
+          <Button variant="danger" onClick={signOut}>Sign Out</Button>
+        </div>
       </Container>
     </Navbar>
+
   );
 }

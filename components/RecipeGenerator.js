@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 import { Button, Alert } from 'react-bootstrap';
 import { getAllRecipes } from '../api/RecipeData';
 
@@ -96,7 +97,13 @@ function RecipeGenerator() {
         >
           Generate Recipe
         </Button>
-        {showWarning && <Alert variant="warning">No recipes found with those specific filters.</Alert>}
+        {showWarning && (
+        <Alert variant="warning" className="warning-text">
+          Unfortunately, there are no recipes with those specifications.
+          If you have a recipe that fits, please consider <Link href="/recipes/add">adding it to our site</Link>!
+        </Alert>
+        )}
+
       </div>
     </div>
   );
